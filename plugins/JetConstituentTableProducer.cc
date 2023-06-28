@@ -100,7 +100,7 @@ void JetConstituentTableProducer<T>::produce(edm::Event &iEvent, const edm::Even
   auto outSVs = std::make_unique<std::vector<const reco::VertexCompositePtrCandidate *>> ();
   std::vector<int> jetIdx_pf, jetIdx_sv, pfcandIdx, svIdx;
   // PF Cands
-  std::vector<float> btagEtaRel, btagPtRatio, btagPParRatio, btagSip3dVal, btagSip3dSig, btagJetDistVal, cand_pt;
+  std::vector<float> btagEtaRel, btagPtRatio, btagPParRatio, btagSip3dVal, btagSip3dSig, btagJetDistVal, btagTrackDecayLengthVal, cand_pt;
   // Secondary vertices
   std::vector<float> sv_mass, sv_pt, sv_ntracks, sv_chi2, sv_normchi2, sv_dxy, sv_dxysig, sv_d3d, sv_d3dsig, sv_costhetasvpv;
   std::vector<float> sv_ptrel, sv_phirel, sv_deltaR, sv_enratio;
@@ -204,6 +204,7 @@ void JetConstituentTableProducer<T>::produce(edm::Event &iEvent, const edm::Even
           btagSip3dVal.push_back(trkinfo.getTrackSip3dVal());
           btagSip3dSig.push_back(trkinfo.getTrackSip3dSig());
           btagJetDistVal.push_back(trkinfo.getTrackJetDistVal());
+          btagTrackDecayLengthVal.push_back(trkinfo.getTrackDecayLengthVal());
         } else {
                 btagEtaRel.push_back(0);
                 btagPtRatio.push_back(0);
@@ -211,6 +212,7 @@ void JetConstituentTableProducer<T>::produce(edm::Event &iEvent, const edm::Even
                 btagSip3dVal.push_back(0);
                 btagSip3dSig.push_back(0);
                 btagJetDistVal.push_back(0);
+                btagTrackDecayLengthVal.push_back(0);
         }
       }
     }  // end jet loop
@@ -228,6 +230,7 @@ void JetConstituentTableProducer<T>::produce(edm::Event &iEvent, const edm::Even
     candTable->addColumn<float>("btagSip3dVal", btagSip3dVal, "btagSip3dVal", 10);
     candTable->addColumn<float>("btagSip3dSig", btagSip3dSig, "btagSip3dSig", 10);
     candTable->addColumn<float>("btagJetDistVal", btagJetDistVal, "btagJetDistVal", 10);
+    candTable->addColumn<float>("btagTrackDecayLengthVal", btagTrackDecayLengthVal, "btagTrackDecayLengthVal", 10);
   }
   iEvent.put(std::move(candTable), name_);
 
